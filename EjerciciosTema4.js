@@ -170,6 +170,19 @@ Defender.prototype.receive = function(message) {
     }
 };
 
+//////////////////////////////////////////////////////////////////////////////
+function Sleeper(entity) {
+    Component.call(this, entity);
+}
+Sleeper.prototype = Object.create(Component.prototype);
+Sleeper.prototype.constructor = Sleeper;
+
+Sleeper.prototype.receive = function(message) {
+    if(message instanceof Sleep) {
+        
+    }
+};
+
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -190,16 +203,34 @@ Attack.prototype = Object.create(Message.prototype);
 Attack.prototype.constructor = Attack;
 
 //////////////////////////////////////////////////////////////////////////////
+function Sleep(who, receiver) {
+    Message.call(this, receiver);
+    this.who = who;
+}
+Sleep.prototype = Object.create(Message.prototype);
+Sleep.prototype.constructor = Sleep;
 
+//////////////////////////////////////////////////////////////////////////////
+
+function WakeUp(who, receiver) {
+    Message.call(this, receiver);
+    this.who = who;
+}
+WakeUp.prototype = Object.create(Message.prototype);
+WakeUp.prototype.constructor = WakeUp;
+
+//////////////////////////////////////////////////////////////////////////////
 
 
 // helper functions creating new components
 var attacker = function() { return new Attacker(); };
 var defender = function() { return new Defender(); };
+var sleeper = function() { return new Sleeper(); };
+var wakeup = function() { return new WakeUpper(); };
 
 // entities in the game
 var link = new Entity("link", EntityType.GOOD, [attacker(), defender()]);
-var ganon = new Entity("ganon", EntityType.EVIL, [attacker(), defender()]);
+var ganon = new Entity("ganon", EntityType.EVIL, [attacker(), defender(), sleeper()]);
 var octorok = new Entity("octorok", EntityType.EVIL, [defender()]);
 var armos = new Entity("armos", EntityType.EVIL, [attacker()]);
 
